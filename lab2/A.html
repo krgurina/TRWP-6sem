@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A</title>
+</head>
+<body>
+    <h1>Введите значения x и y:</h1>
+    <form id="sumForm">
+        <input type="text" id="valueX" name="valueX" placeholder="x">
+        <input type="text" id="valueY" name="valueY" placeholder="y">
+        <br/>
+        <button type="submit">Вычислить сумму</button>
+    </form>
+    <h1>Результат:</h1>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('sumForm');
+        const resultA = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const x = document.getElementById('valueX').value;
+            const y = document.getElementById('valueY').value;
+
+            const xhrA = new XMLHttpRequest();
+            xhrA.open('POST', '/sum', false);
+            xhrA.setRequestHeader('Content-Type', 'text/plain');
+            xhrA.setRequestHeader('X-value-x', x);
+            xhrA.setRequestHeader('X-value-y', y);
+
+            xhrA.onload = () => {
+                if (xhrA.status === 200) {
+                resultA.textContent = xhrA.responseText;
+                }
+            };
+
+            xhrA.send();
+        });
+    </script>
+</body>
+</html>
